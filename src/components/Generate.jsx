@@ -11,16 +11,18 @@ import {
 
 const Generate = () => {
   const [spinner, setSpinner] = useState(true);
-  const API =
-    "http://tomsoft1dev1.northeurope.cloudapp.azure.com:8000/get_planet";
+  const [imageUrlisFired, setImageUrlisFired] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const API = "http://tomsoft1dev1.northeurope.cloudapp.azure.com:8000/get_planet";
 
-
-  const time = Date.now();
-  const imageUrl = API + "/?data=" + time;
-
-  React.useEffect(() => {
-    setTimeout(() => setSpinner(false), 15000)
-  });
+  if (imageUrlisFired === false) {
+    setTimeout(() => {
+      const time = Date.now();
+      setImageUrl(API + "/?data=" + time);
+      setImageUrlisFired(true);
+      setSpinner(false);
+    }, 2000)
+  }
 
   return (
     <div>
@@ -48,12 +50,13 @@ const Generate = () => {
           <div className="hero__section--two-columns two-right">
             {!spinner ? (
               <div>{<img className="generated_image"
-              style={{width:'512px'}}
-              src={imageUrl}></img>}</div>
+                style={{ width: '512px' }}
+                src={imageUrl}></img>}</div>
+
             ) : (
               <div>
                 <img src="assets/images/epochs64_3.gif"></img>
-                <p style={{ position: "relative", bottom: "0" }}>Modeluję...</p>
+                <p style={{position: "relative", bottom: "0" }}>Modeluję i pobieram...</p>
               </div>
             )}
           </div>
